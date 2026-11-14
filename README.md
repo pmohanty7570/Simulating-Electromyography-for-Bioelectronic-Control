@@ -5,7 +5,7 @@ Proportional control of a 3D-printed hand using muscle signals from a surface EM
 When you flex a muscle, it gives off a small electrical signal. This project reads that signal with a MyoWare 2.0 EMG sensor, calibrates itself to the user, and drives a servo so that the fingers bends **in proportion to how hard the muscle is flexed**. It does more than switch the fingers on or off.
 
 <p align="center">
-  <img src="images/hand-closing.jpg" width="400" alt="3D-printed hand closing its fingers in response to a forearm EMG signal">
+  <img src="Images/hand-closing.jpg" width="400">
 </p>
 
 ---
@@ -15,7 +15,7 @@ When you flex a muscle, it gives off a small electrical signal. This project rea
 ```
 ├── sciencefair-2026-final.ino   # Arduino sketch (calibration + proportional servo control)
 ├── hand.stl                     # 3D-printable hand model
-├── images/                      # Photos of the build and testing
+├── Images/                      # Photos of the build and testing
 └── README.md
 ```
 
@@ -54,7 +54,7 @@ Servo GND    ──► GND (common ground with the Arduino)
 ```
 
 <p align="center">
-  <img src="images/servo-inside-hand.jpg" width="400" alt="Servo mounted inside the 3D-printed hand, wired to the Arduino and breadboard">
+  <img src="Images/servo-inside-hand.jpg" width="400" alt="Servo mounted inside the 3D-printed hand, wired to the Arduino and breadboard">
   <br><em>The servo sits inside the hand's palm housing. A grip trainer gives a steady forearm contraction during testing.</em>
 </p>
 
@@ -113,7 +113,7 @@ LIGHT,312,163
 Open the **Serial Plotter** in the Arduino IDE to see the EMG signal and the servo angle live.
 
 <p align="center">
-  <img src="images/serial-plotter.jpg" width="500" alt="Arduino Serial Plotter showing an EMG spike and the servo angle dropping in response">
+  <img src="Images/serial-plotter.jpg" width="500" alt="Arduino Serial Plotter showing an EMG spike and the servo angle dropping in response">
   <br><em>Serial Plotter: as the EMG signal (orange) spikes during a flex, the servo angle (green) drops and the hand closes.</em>
 </p>
 
@@ -147,8 +147,8 @@ Open the **Serial Plotter** in the Arduino IDE to see the EMG signal and the ser
 Calibration data and statistics from three muscle groups (values in ADC units, 0–1023):
 
 <p align="center">
-  <img src="images/forearm-setup.jpg" width="350" alt="Electrodes placed on the forearm">
-  <img src="images/biceps-setup.jpg" width="350" alt="Electrodes placed on the biceps">
+  <img src="Images/forearm-setup.jpg" width="350" alt="Electrodes placed on the forearm">
+  <img src="Images/biceps-setup.jpg" width="350" alt="Electrodes placed on the biceps">
   <br><em>Left: forearm placement. Right: biceps placement.</em>
 </p>
 
