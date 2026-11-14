@@ -1,10 +1,23 @@
-# Simulating-Electromyography-for-Bioelectronic-Control
+# Simulating-Electromyography-for-Bioelectronic-Control/EMG-Controlled Prosthetic Hand
 
-# EMG-Controlled Prosthetic Finger
+Proportional control of a 3D-printed hand using muscle signals from a surface EMG sensor and an Arduino.
 
-Proportional control of a 3D-printed finger using muscle signals from a surface EMG sensor and an Arduino.
+When you flex a muscle, it gives off a small electrical signal. This project reads that signal with a MyoWare 2.0 EMG sensor, calibrates itself to the user, and drives a servo so that the fingers bends **in proportion to how hard the muscle is flexed**. It does more than switch the fingers on or off.
 
-When you flex a muscle, it gives off a small electrical signal. This project reads that signal with a MyoWare 2.0 EMG sensor, calibrates itself to the user, and drives a servo so that the finger bends **in proportion to how hard the muscle is flexed**. It does more than switch the finger on or off.
+<p align="center">
+  <img src="images/hand-closing.jpg" width="400" alt="3D-printed hand closing its fingers in response to a forearm EMG signal">
+</p>
+
+---
+
+## Repository Structure
+
+```
+├── sciencefair-2026-final.ino   # Arduino sketch (calibration + proportional servo control)
+├── hand.stl                     # 3D-printable hand model
+├── images/                      # Photos of the build and testing
+└── README.md
+```
 
 ---
 
@@ -26,7 +39,7 @@ Many low-cost assistive and prosthetic devices use buttons or switches, which fe
 | Electrode pads | Placed on the center of the muscle belly, plus a reference electrode |
 | Servo motor (180°) | Signal wire on **pin 9** |
 | Breadboard + jumper wires | |
-| 3D-printed hand / finger | Linked to the servo to bend the finger joints |
+| 3D-printed hand ([`hand.stl`](hand.stl)) | Linked to the servo to bend the finger joints |
 | Alcohol wipes | Clean the skin before placing the electrodes |
 
 ### Wiring
@@ -39,6 +52,22 @@ Servo signal ──► Arduino D9
 Servo V+     ──► 5V (or an external supply)
 Servo GND    ──► GND (common ground with the Arduino)
 ```
+
+<p align="center">
+  <img src="images/servo-inside-hand.jpg" width="400" alt="Servo mounted inside the 3D-printed hand, wired to the Arduino and breadboard">
+  <br><em>The servo sits inside the hand's palm housing. A grip trainer gives a steady forearm contraction during testing.</em>
+</p>
+
+### 3D-Printed Hand
+
+The hand model is included as [`hand.stl`](hand.stl). GitHub shows STL files in an interactive 3D viewer, so you can click the file to rotate and inspect it without downloading anything.
+
+To build your own:
+
+1. Download `hand.stl` and slice it in your slicer (Cura, PrusaSlicer, Bambu Studio, etc.).
+2. Print the parts.
+3. Assemble the finger joints and mount the servo inside the palm housing.
+4. Connect the servo to the fingers so it pulls the fingers closed as the servo turns from 180° to 0°.
 
 > For safety, power the Arduino from a laptop running on battery (not plugged into the wall) while electrodes are on your body.
 
@@ -59,7 +88,7 @@ Noise Range        = Relaxed Max − Relaxed Min
 Adaptive Threshold = Relaxed Max + 2 × Noise Range
 ```
 
-The `2 × Noise Range` buffer stops resting noise and twitches from moving the finger. Muscles with noisier baselines automatically get a larger buffer.
+The `2 × Noise Range` buffer stops resting noise and twitches from moving the fingers. Muscles with noisier baselines automatically get a larger buffer.
 
 ### 2. Live Control
 
@@ -83,18 +112,23 @@ LIGHT,312,163
 
 Open the **Serial Plotter** in the Arduino IDE to see the EMG signal and the servo angle live.
 
+<p align="center">
+  <img src="images/serial-plotter.jpg" width="500" alt="Arduino Serial Plotter showing an EMG spike and the servo angle dropping in response">
+  <br><em>Serial Plotter: as the EMG signal (orange) spikes during a flex, the servo angle (green) drops and the hand closes.</em>
+</p>
+
 ---
 
 ## Usage
 
-1. Clone this repo and open the `.ino` file in the Arduino IDE.
+1. Clone this repo and open `sciencefair-2026-final.ino` in the Arduino IDE.
 2. Make sure the `Servo` library is available (it comes with the IDE).
 3. Wire everything as shown above and place the electrodes on the target muscle.
 4. Upload the sketch and open the Serial Monitor at **9600 baud**.
 5. Follow the prompts:
    - After the first double-click → **RELAX** for 10 seconds
    - After the second double-click → **FLEX as hard as you can** for 10 seconds
-6. After the third double-click, calibration is done. Flex to control the finger.
+6. After the third double-click, calibration is done. Flex to control the hand.
 
 ### Configurable constants
 
@@ -111,6 +145,12 @@ Open the **Serial Plotter** in the Arduino IDE to see the EMG signal and the ser
 ## Results
 
 Calibration data and statistics from three muscle groups (values in ADC units, 0–1023):
+
+<p align="center">
+  <img src="images/forearm-setup.jpg" width="350" alt="Electrodes placed on the forearm">
+  <img src="images/biceps-setup.jpg" width="350" alt="Electrodes placed on the biceps">
+  <br><em>Left: forearm placement. Right: biceps placement.</em>
+</p>
 
 | Metric | Biceps | Thigh | Forearm |
 |---|---|---|---|
@@ -157,7 +197,6 @@ Signal-to-Noise Ratio = (Mean Strong EMG − Mean Relaxed EMG) / Noise Range
 
 - A servo or motor that turns past 180° for a wider, more realistic range of motion
 - Multiple EMG sensors for independent finger control
-- Expanding from one finger to a full hand
 - Other uses: rehabilitation tools, remote medical device control, human–computer interaction
 
 ---
@@ -178,6 +217,6 @@ Signal-to-Noise Ratio = (Mean Strong EMG − Mean Relaxed EMG) / Noise Range
 
 ## Author
 
-**Bhargav Narayanan**
+**Pratyush Mohanty**
 
 > ⚠️ This is a student research project, not a medical device.
